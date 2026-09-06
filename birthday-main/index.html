@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Magical Birthday Surprise ✨</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ==========================================
+       PASSCODE LOCK SCREEN OVERLAY
+  ========================================== -->
+  <div class="passcode-screen" id="passcode-screen">
+    <div class="passcode-card glass-card">
+      <div class="passcode-badge-icon">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h2 class="passcode-title">Enter Passcode</h2>
+      <p class="passcode-subtitle">Enter the secret 6-digit code to unlock the magic ✨</p>
+      
+      <div class="passcode-dots" id="passcode-dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      
+      <div class="passcode-error-msg hidden" id="passcode-error">
+        Incorrect Passcode! Try again 💕
+      </div>
+
+      <div class="keypad-grid">
+        <button class="key-btn" data-key="1">1</button>
+        <button class="key-btn" data-key="2">2</button>
+        <button class="key-btn" data-key="3">3</button>
+        <button class="key-btn" data-key="4">4</button>
+        <button class="key-btn" data-key="5">5</button>
+        <button class="key-btn" data-key="6">6</button>
+        <button class="key-btn" data-key="7">7</button>
+        <button class="key-btn" data-key="8">8</button>
+        <button class="key-btn" data-key="9">9</button>
+        <button class="key-btn action-key clear-key" id="key-clear">C</button>
+        <button class="key-btn" data-key="0">0</button>
+        <button class="key-btn action-key submit-key" id="key-submit"><i class="fa-solid fa-check"></i></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Cursor Glow & Heart Trail Canvas -->
+  <div class="cursor-glow" id="cursor-glow"></div>
+  <canvas id="heart-trail-canvas"></canvas>
+
+  <!-- Ambient Particles & Floating Elements Container -->
+  <div class="floating-bg-container" id="floating-bg"></div>
+
+  <!-- Audio Controller Widget -->
+  <div class="audio-controller-widget" id="audio-widget">
+    <button class="audio-btn" id="audio-toggle-btn" title="Toggle Music">
+      <i class="fa-solid fa-compact-disc fa-spin-pulse" id="disc-icon"></i>
+      <i class="fa-solid fa-music" id="music-icon"></i>
+    </button>
+    <div class="audio-controls-panel" id="audio-panel">
+      <button id="play-pause-btn" class="ctrl-btn"><i class="fa-solid fa-play"></i></button>
+      <button id="mute-btn" class="ctrl-btn"><i class="fa-solid fa-volume-high"></i></button>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="1" />
+    </div>
+  </div>
+
+  <!-- ==========================================
+       PAGE 1: LOADING SCREEN & UNBOXING
+  ========================================== -->
+  <section id="page-1" class="page active">
+    <!-- Initial Loader Overlay -->
+    <div class="loader-overlay" id="loader-overlay">
+      <div class="loader-content">
+        <div class="sparkle-logo">✨🎂✨</div>
+        <h2 class="loader-title">Preparing Your Surprise...</h2>
+        <div class="progress-bar-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <span class="progress-text" id="progress-text">0%</span>
+      </div>
+    </div>
+
+    <!-- Main Gift Unboxing View -->
+    <div class="page-container center-content" id="gift-section">
+      <div class="teaser-badge">
+        <i class="fa-solid fa-sparkles"></i> Someone special has a surprise waiting...
+      </div>
+
+      <div class="gift-box-wrapper" id="gift-box">
+        <div class="gift-box-lid">
+          <div class="gift-ribbon-v"></div>
+          <div class="gift-bow">🎁</div>
+        </div>
+        <div class="gift-box-body">
+          <div class="gift-ribbon-v"></div>
+          <div class="gift-ribbon-h"></div>
+        </div>
+        <div class="gift-glow-effect"></div>
+      </div>
+
+      <p class="gift-hint">Tap the gift box to unlock the magic ✨</p>
+
+      <div class="unboxed-content hidden" id="unboxed-content">
+        <h1 class="sparkle-heading">Happy Birthday, Manu <span class="heart-pulse">❤️</span></h1>
+        <p class="sparkle-subheading">A journey made of smiles, memories, and endless love awaits you...</p>
+        <button class="primary-btn glow-btn" id="start-journey-btn">
+          Open My Surprise <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PAGE 2: TODAY THE WORLD CELEBRATES YOU (MANU)
+  ========================================== -->
+  <section id="page-2" class="page">
+    <div class="page-container celebrate-page-container">
+      <!-- Left Column: Header, Subtitle, Wishes List, Closing Message -->
+      <div class="celebrate-left-col">
+        <div class="pill-badge-wrap">
+          <span class="celebrate-badge"><i class="fa-solid fa-cake-candles"></i> Happy Birthday</span>
+        </div>
+
+        <h1 class="celebrate-heading">Today The World Celebrates You <span class="heart-icon">♡</span></h1>
+
+        <p class="celebrate-subtitle">
+          On this magical day, the stars shine a little brighter,<br>
+          and the world feels a little more beautiful —<br>
+          because you were born. ✨
+        </p>
+
+        <div class="wishes-list">
+          <div class="wish-item-card glass-card">
+            <span class="wish-icon">🌹</span>
+            <p class="wish-text">May every day of your life be filled with happiness, love, and beautiful moments.</p>
+          </div>
+          <div class="wish-item-card glass-card">
+            <span class="wish-icon">✨</span>
+            <p class="wish-text">May all your dreams come true, and may you achieve everything you wish for.</p>
+          </div>
+          <div class="wish-item-card glass-card">
+            <span class="wish-icon">💗</span>
+            <p class="wish-text">May you always be surrounded by success, peace, laughter, and the people who truly care about you.</p>
+          </div>
+          <div class="wish-item-card glass-card">
+            <span class="wish-icon">🌟</span>
+            <p class="wish-text">May this new year of your life bring you countless reasons to smile and many beautiful memories to cherish.</p>
+          </div>
+        </div>
+
+        <div class="celebrate-closing-box">
+          <p class="closing-quote">Keep smiling, keep shining, and keep being the amazing person you are. ❤️</p>
+          <h3 class="closing-signature">Happy Birthday once again, Manu! 🎂✨</h3>
+        </div>
+
+        <div class="celebrate-nav-btn">
+          <button class="primary-btn glow-btn nav-btn" data-target="4">
+            Explore Memory Gallery <i class="fa-solid fa-images"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: Next Birthday Countdown & Interactive Cake -->
+      <div class="celebrate-right-col">
+        <!-- Next Birthday Countdown Card -->
+        <div class="countdown-card glass-card">
+          <div class="countdown-header">
+            <i class="fa-solid fa-hourglass-half"></i> NEXT BIRTHDAY COUNTDOWN
+          </div>
+          <div class="countdown-digits-wrapper" id="countdown-timer">
+            <div class="digit-box">
+              <span class="digit-num" id="cd-days">355</span>
+              <span class="digit-label">DAYS</span>
+            </div>
+            <span class="digit-colon">:</span>
+            <div class="digit-box">
+              <span class="digit-num" id="cd-hours">21</span>
+              <span class="digit-label">HOURS</span>
+            </div>
+            <span class="digit-colon">:</span>
+            <div class="digit-box">
+              <span class="digit-num" id="cd-mins">04</span>
+              <span class="digit-label">MINS</span>
+            </div>
+            <span class="digit-colon">:</span>
+            <div class="digit-box">
+              <span class="digit-num" id="cd-secs">26</span>
+              <span class="digit-label">SECS</span>
+            </div>
+          </div>
+          <div class="countdown-subtext">
+            Until I get to celebrate you again 💕
+          </div>
+        </div>
+
+        <!-- Cake & Candle Blowing Container -->
+        <div class="cake-wrapper-celebrate">
+          <div class="cake-container">
+            <div class="cake">
+              <div class="plate"></div>
+              <div class="layer layer-bottom"></div>
+              <div class="layer layer-middle"></div>
+              <div class="layer layer-top"></div>
+              <div class="icing"></div>
+              
+              <!-- Interactive Candles -->
+              <div class="candles-wrapper">
+                <div class="candle" data-candle="1">
+                  <div class="flame"></div>
+                  <div class="smoke"></div>
+                </div>
+                <div class="candle" data-candle="2">
+                  <div class="flame"></div>
+                  <div class="smoke"></div>
+                </div>
+                <div class="candle" data-candle="3">
+                  <div class="flame"></div>
+                  <div class="smoke"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <p class="blow-candles-hint" id="cake-hint">
+            <i class="fa-solid fa-wand-magic-sparkles"></i> Click or tap on the flames to blow out the candles!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PAGE 4: MEMORY GALLERY (PINTEREST MASONRY)
+  ========================================== -->
+  <section id="page-4" class="page">
+    <div class="page-container">
+      <div class="page-header text-center">
+        <span class="page-tag">Snapshot Collection 📷</span>
+        <h1 class="main-heading">Memory Gallery</h1>
+        <p class="section-desc">Click any photo to enter full screen view with interactive lightbox controls.</p>
+      </div>
+
+      <!-- Masonry Grid -->
+      <div class="masonry-gallery" id="gallery-grid">
+        <div class="gallery-item glass-card" data-index="0" data-caption="Beautiful Moments & Pure Joy ✨">
+          <div class="gallery-img-box">
+            <img src="images/whatsapp1.jpg" alt="Gallery Photo 1" loading="lazy" />
+            <div class="gallery-overlay">
+              <i class="fa-solid fa-expand expand-icon"></i>
+              <span class="gallery-caption-preview">Beautiful Moments</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item glass-card" data-index="1" data-caption="Shining Bright with Heartfelt Joy 💖">
+          <div class="gallery-img-box">
+            <img src="images/whatsapp2.jpg" alt="Gallery Photo 2" loading="lazy" />
+            <div class="gallery-overlay">
+              <i class="fa-solid fa-expand expand-icon"></i>
+              <span class="gallery-caption-preview">Heartfelt Joy</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item glass-card" data-index="2" data-caption="Unfiltered Smiles & Golden Memories 🌟">
+          <div class="gallery-img-box">
+            <img src="images/whatsapp3.jpg" alt="Gallery Photo 3" loading="lazy" />
+            <div class="gallery-overlay">
+              <i class="fa-solid fa-expand expand-icon"></i>
+              <span class="gallery-caption-preview">Golden Memories</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item glass-card" data-index="3" data-caption="Moments of Pure Elegance & Happiness ✨">
+          <div class="gallery-img-box">
+            <img src="images/photo1.jpg" alt="Gallery Photo 4" loading="lazy" />
+            <div class="gallery-overlay">
+              <i class="fa-solid fa-expand expand-icon"></i>
+              <span class="gallery-caption-preview">Pure Elegance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item glass-card" data-index="4" data-caption="Endless Laughter & Radiant Warmth ☀️">
+          <div class="gallery-img-box">
+            <img src="images/photo2.jpg" alt="Gallery Photo 5" loading="lazy" />
+            <div class="gallery-overlay">
+              <i class="fa-solid fa-expand expand-icon"></i>
+              <span class="gallery-caption-preview">Radiant Warmth</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="gallery-item glass-card" data-index="5" data-caption="Forever Cherished Core Memory 💖">
+          <div class="gallery-img-box">
+            <img src="images/photo3.jpg" alt="Gallery Photo 6" loading="lazy" />
+            <div class="gallery-overlay">
+              <i class="fa-solid fa-expand expand-icon"></i>
+              <span class="gallery-caption-preview">Cherished Memory</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-center margin-top-lg">
+        <button class="primary-btn glow-btn nav-btn" data-target="6">
+          A Heartfelt Message <i class="fa-solid fa-envelope-open-text"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fullscreen Lightbox Modal -->
+  <div class="lightbox-modal" id="lightbox">
+    <button class="lightbox-close" id="lightbox-close"><i class="fa-solid fa-xmark"></i></button>
+    <button class="lightbox-nav prev" id="lightbox-prev"><i class="fa-solid fa-chevron-left"></i></button>
+    <div class="lightbox-content">
+      <img src="" id="lightbox-img" alt="Enlarged Memory" />
+      <p class="lightbox-caption" id="lightbox-caption"></p>
+    </div>
+    <button class="lightbox-nav next" id="lightbox-next"><i class="fa-solid fa-chevron-right"></i></button>
+  </div>
+
+  <!-- ==========================================
+       PAGE 6: FINAL SURPRISE & HANDWRITTEN LETTER
+  ========================================== -->
+  <section id="page-6" class="page">
+    <canvas id="fireworks-canvas"></canvas>
+    
+    <div class="page-container center-content final-surprise-container">
+      <div class="page-header text-center">
+        <span class="page-tag">Magical Finale 🌌</span>
+        <h1 class="main-heading glow-text-grand">A Heartfelt Message For You</h1>
+      </div>
+
+      <!-- Central Glowing Pulsing Heart -->
+      <div class="glowing-heart-wrapper" id="heart-letter-trigger">
+        <div class="heart-pulse-icon">❤️</div>
+        <div class="heart-ring-glow"></div>
+        <p class="heart-click-text">Click the heart to unfold your letter 💌</p>
+      </div>
+
+      <!-- 3D Unfolding Paper Letter Modal/Card -->
+      <div class="paper-letter-wrapper hidden" id="paper-letter">
+        <div class="paper-letter-content">
+          <button class="letter-close-btn" id="letter-close"><i class="fa-solid fa-xmark"></i></button>
+          
+          <div class="letter-header">
+            <h2>Dearest Manu ❤️</h2>
+            <div class="letter-divider">✨ 💖 ✨</div>
+          </div>
+          
+          <div class="letter-body handwritten-font">
+            <p>Happy Birthday!</p>
+            <p>As another wonderful year begins, I wanted to take this moment to remind you how deeply appreciated, loved, and treasured you are.</p>
+            <p>You bring so much light, comfort, and laughter into the lives of everyone around you. Thank you for being my rock, my sounding board, and my partner in joy.</p>
+            <p>May your life always be filled with endless happiness, boundless laughter, overflowing love, deep peace, roaring success, and magical memories.</p>
+            <p>Never forget how special you are.</p>
+            <p class="signature">With all my love & best wishes,<br><span>Forever Your Friend 🌸</span></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Navigation to Page 7 -->
+      <div class="finale-actions margin-top-lg">
+        <button class="primary-btn glow-btn-gold nav-btn" data-target="7">
+          Final Wish & Message <i class="fa-solid fa-heart"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       PAGE 7: GRAND FINALE - HAPPY BIRTHDAY MY LOVE
+  ========================================== -->
+  <section id="page-7" class="page">
+    <div class="my-love-bg-overlay" style="background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.35), rgba(15, 23, 42, 0.65)), url('images/whatsapp1.jpg');"></div>
+
+    <div class="page-container center-content my-love-container">
+      <div class="my-love-header text-center">
+        <h1 class="my-love-title">♡ Happy Birthday,<br><span class="my-love-highlight">My Love</span></h1>
+      </div>
+
+      <div class="my-love-poem-card glass-card">
+        <p class="poem-line highlight-box">
+          So much may have changed with time, but one thing has always remained the same —<br>
+          I will always wish for your happiness, success, and everything beautiful that life has to offer. ❤️
+        </p>
+
+        <p class="poem-line highlight-box">
+          No matter where life takes you, I hope you always keep smiling, keep growing, and keep achieving everything you dream of. ✨
+        </p>
+
+        <div class="poem-closing-box">
+          <h2 class="poem-closing">Happy Birthday, Manu. ❤️🎂</h2>
+          <p class="poem-sub-closing">May this year bring you endless happiness, success, and all the beautiful moments you truly deserve. 🫶🏻</p>
+        </div>
+      </div>
+
+      <div class="my-love-footer">
+        <p class="footer-heart-msg">Made with every little piece of my heart, especially for you. ♡</p>
+      </div>
+
+      <div class="finale-actions margin-top-lg">
+        <button class="primary-btn glow-btn-gold" id="replay-btn">
+          <i class="fa-solid fa-rotate-left"></i> Replay The Journey
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- External JS Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "birthday-site",
+  "version": "1.0.0",
+  "description": "Beautiful Birthday Website",
+  "scripts": {
+    "dev": "http-server -p 8000 -o",
+    "start": "http-server -p 8000 -o"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}
