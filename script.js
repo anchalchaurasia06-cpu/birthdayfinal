@@ -194,7 +194,7 @@ function goToPage(pageNumber) {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     // Page specific triggers
-    if (pageNumber === '6') {
+    if (pageNumber === '6' || pageNumber === '7') {
       triggerConfetti();
     }
   }
